@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """The factory of Pascal's triangles"""
 
 
