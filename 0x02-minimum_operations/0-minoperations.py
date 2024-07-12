@@ -33,8 +33,9 @@ def primeGenerator():
     primes = []
     while True:
         for prime in primes:
-            if n % prime:
-                continue
-        yield n
-        primes.append(n)
+            if n % prime == 0:
+                break
+        else:
+            yield n
+            primes.append(n)
         n += 1
