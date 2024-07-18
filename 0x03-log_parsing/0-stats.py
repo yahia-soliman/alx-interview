@@ -24,9 +24,9 @@ def parse_log():
 
 def print_stats():
     """print the current stats in stdout"""
-    print(f"File size: {total_size}")
+    print("File size: {}".format(total_size))
     for code, num in sorted(codes.items()):
-        print(f"{code}: {num}")
+        print("{}: {}".format(code, num))
 
 
 def main():
