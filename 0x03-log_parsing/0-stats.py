@@ -12,16 +12,6 @@ total_size = 0
 codes = {}
 
 
-def parse_log():
-    """get the next valid-line data"""
-    while True:
-        match = r.match(input())
-        if not match:
-            continue
-        d = match.groupdict()
-        return d["status_code"], d["file_size"]
-
-
 def print_stats():
     """print the current stats in stdout"""
     print("File size: {}".format(total_size))
@@ -34,9 +24,13 @@ def main():
     global total_size
     while True:
         for _ in range(10):
-            code, size = parse_log()
+            match = r.match(input())
+            if not match:
+                continue
+            d = match.groupdict()
+            code = d["status_code"]
             codes[code] = codes.get(code, 0) + 1
-            total_size += int(size)
+            total_size += int(d["file_size"])
         print_stats()
 
 
