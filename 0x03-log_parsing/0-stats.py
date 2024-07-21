@@ -4,9 +4,9 @@
 import re
 
 
-r = re.compile(r'^((1?\d?\d|2[0-4]\d|25[0-5])(\.| - )){4}'
-               r'\[\d.+\d\] "GET /projects/260 HTTP/1\.1" '
-               r'(?P<status_code>[2-5]0[0-5]) (?P<file_size>\d+)$')
+status_codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+r = re.compile(r'^.*\d\] "GET /projects/260 HTTP/1\.1" '
+               r'(?P<status_code>\w+) (?P<file_size>\d+)$')
 
 total_size = 0
 codes = {}
@@ -15,8 +15,9 @@ codes = {}
 def print_stats():
     """print the current stats in stdout"""
     print("File size: {}".format(total_size))
-    for code, num in sorted(codes.items()):
-        print("{}: {}".format(code, num))
+    for code in status_codes:
+        if code in codes:
+            print("{}: {}".format(code, codes[code]))
 
 
 def main():
