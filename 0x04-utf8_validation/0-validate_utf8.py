@@ -12,12 +12,12 @@ def validUTF8(data):
     sub_bytes = 0
     for b in data:
         idx_0 = idx_of_0(b)
-        if idx_0 > 4 or b > 255:
+        if (sub_bytes > 0 and idx_0 != 1) or idx_0 > 4:
             return False
-        if sub_bytes > 0 and idx_0 != 1:
-            return False
-        sub_bytes += idx_0 if idx_0 != 1 else -1
-    return sub_bytes == 0
+        if idx_0 != 1:
+            sub_bytes = idx_0
+        sub_bytes -= 1
+    return sub_bytes <= 0
 
 
 def idx_of_0(number):
@@ -29,3 +29,15 @@ def idx_of_0(number):
         i += 1
         b >>= 1
     return i
+
+
+data = [65]
+print(validUTF8(data))
+data = [80, 121, 116, 104, 111, 110, 32, 105, 115, 32, 99, 111, 111, 108, 33]
+print(validUTF8(data))
+data = [229, 65, 127, 256]
+print(validUTF8(data))
+data = [467, 133, 108]
+print(validUTF8(data))
+data = [240, 188, 128, 167]
+print(validUTF8(data))
