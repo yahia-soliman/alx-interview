@@ -85,4 +85,7 @@ Now this Binary with utf-8 method is ready to go through wires to our friends to
 
 ## Resources
 See the Wikipedia page of any buzz word you are not understanding
+
 [Nice video explaining Unicode](https://www.youtube.com/watch?v=ut74oHojxqo)
+
+[ASCII, Unicode, UTF-8: Explained Simply](https://www.youtube.com/watch?v=DntKZ9xJ1sM)
