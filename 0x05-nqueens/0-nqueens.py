@@ -5,10 +5,10 @@ import sys
 
 def n_from_argv():
     """Get the value of N from command-line"""
-    if len(sys.orig_argv) != 3:
+    if len(sys.argv) != 2:
         return 0, "Usage: nqueens N"
     try:
-        N = int(sys.orig_argv[2])
+        N = int(sys.argv[1])
     except ValueError:
         return 0, "N must be a number"
     if N < 4:
@@ -28,13 +28,13 @@ def nqueens(N):
     N non-attacking queens on an NxN chessboard
     """
     solutions = []
-    board = {(i, j) for i in range(N) for j in range(N)}
-    for place in board:
-        queens = {place}
+    board = [[i, j] for i in range(N) for j in range(N)]
+    for place in board[: N // 2 + 1]:
+        queens = [place]
         for p in board:
             if any([attacable(p, queen) for queen in queens]):
                 continue
-            queens.add(p)
+            queens.append(p)
         if len(queens) == N:
             solutions.append(queens)
 
