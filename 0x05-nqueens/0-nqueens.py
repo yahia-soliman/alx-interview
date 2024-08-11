@@ -16,40 +16,38 @@ def n_from_argv():
     return N, None
 
 
-def attacable(place, queen):
-    """Check if a place is attacable by a queen"""
-    xdiff = abs(place[0] - queen[0])
-    ydiff = abs(place[1] - queen[1])
-    return xdiff == ydiff or xdiff == 0 or ydiff == 0
-
-
-def solve(N, available):
-    """Solve the nqueens problem recursively"""
-    if N == 0:
-        return [[]]
-    if len(available) < N:
-        return []
-
-    solutions = []
-
-    for queen in available:
-        avail = [p for p in available if not attacable(p, queen)]
-        result = solve(N - 1, avail)
-        for row in result:
-            if any([point in sol for point in row for sol in solutions]):
-                continue
-            row.insert(0, queen)
-            solutions.append(row)
-
-    return solutions
-
-
 def nqueens(N):
     """get every possible solution to place
     N non-attacking queens on an NxN chessboard
     """
-    board = [[i, j] for i in range(N) for j in range(N)]
-    return solve(N, board)
+    cols = []
+    neg_diag = set()
+    pos_diag = set()
+    solutions = []
+
+    def place_queen(row=0):
+        """Place a queen in the specific row"""
+        if row == N:
+            # There are already N queens placed (a solution)
+            return solutions.append(cols.copy())
+        for col in range(N):
+            add = row + col
+            sub = row - col
+            # if not under attack by any placed queen
+            if not (col in cols or add in pos_diag or sub in neg_diag):
+                # place it in this [row, col]
+                cols.append(col)
+                pos_diag.add(add)
+                neg_diag.add(sub)
+                # place another one in next row
+                place_queen(row + 1)
+                # take the queen off-board to use it in the next valid column
+                cols.pop()
+                pos_diag.remove(add)
+                neg_diag.remove(sub)
+
+    place_queen()
+    return solutions
 
 
 if __name__ == "__main__":
@@ -57,5 +55,5 @@ if __name__ == "__main__":
     if err:
         print(err)
         exit(1)
-    for solution in nqueens(N):
-        print(solution)
+    for sol in nqueens(N):
+        print([[x, y] for x, y in enumerate(sol)])
