@@ -17,7 +17,7 @@ def n_from_argv():
 
 
 def nqueens(N):
-    """get every possible solution to place
+    """Get every possible solution to place
     N non-attacking queens on an NxN chessboard
     """
     cols = []
@@ -26,7 +26,7 @@ def nqueens(N):
     solutions = []
 
     def place_queen(row=0):
-        """Place a queen in the specific row"""
+        """Place queens recursively on an NxN chessboard"""
         if row == N:
             # There are already N queens placed (a solution)
             return solutions.append(cols.copy())
