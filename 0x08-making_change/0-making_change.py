@@ -10,7 +10,8 @@ def makeChange(coins, total):
         return 0
     n = 0
     for coin in sorted(coins, reverse=True):
-        while coin <= total:
-            total -= coin
-            n += 1
+        divisible = total // coin
+        if divisible:
+            n += divisible
+            total %= coin
     return n if total == 0 else -1
