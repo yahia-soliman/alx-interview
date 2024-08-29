@@ -5,21 +5,14 @@
 def island_perimeter(grid):
     """perimeter of the island described in grid"""
     borders = 0
-    rows = len(grid)
-    for i in range(rows):
-        cols = len(grid[i])
-        for j in range(cols):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
             if grid[i][j] == 0:
                 continue
-            # how many sides around grid[i][j]
-            # are connected to water
+            # ignore sides connected with another [1]
             borders += 4
-            if i > 0:
-                borders -= grid[i - 1][j]
-            if j > 0:
-                borders -= grid[i][j - 1]
-            if i < rows - 1:
-                borders -= grid[i + 1][j]
-            if j < cols - 1:
-                borders -= grid[i][j + 1]
+            if i and grid[i - 1][j]:
+                borders -= 2
+            if j and grid[i][j - 1]:
+                borders -= 2
     return borders
